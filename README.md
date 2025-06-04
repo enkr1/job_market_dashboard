@@ -31,15 +31,16 @@ CSV
 - [X] Extracted data file in JSON or CSV format
 - [X] Written report (1-2 pages) including your overall approach and design - [report](/report.md)
 
----
-Your README setup is already clean and direct, but it can be made even more concise, professional, and welcoming to contributors. Here’s an improved, slightly more polished version that maintains clarity and structure while adding brief context at each step, minimal redundancy, and a bit of friendliness—*without sacrificing any detail*.
+
 
 ---
+
+
 
 ## 📦 Setup
 
 > **Platform:** macOS (Bash).
-> 
+>
 > **Prerequisite:** Python 3.x installed.
 
 ### 🚀 Quick Start (Recommended)
