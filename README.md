@@ -32,43 +32,148 @@ CSV
 - [X] Written report (1-2 pages) including your overall approach and design - [report](/report.md)
 
 ---
+Your README setup is already clean and direct, but it can be made even more concise, professional, and welcoming to contributors. Here’s an improved, slightly more polished version that maintains clarity and structure while adding brief context at each step, minimal redundancy, and a bit of friendliness—*without sacrificing any detail*.
 
-## 📦 Setup
-### 1. Install dependencies
+---
+
+## 📦 Set up
+
+> **Platform:** macOS (Bash).
+> **Prerequisite:** Python 3.x installed.
+
+### Install dependencies
+
 ```sh
 pip install -r requirements.txt
 ```
 
-### 2. Run the scraper directly
+### Run the scraper
+
 ```sh
-python -m scraper.selenium_scraper # Run the scraper directly
+python -m scraper.selenium_scraper
 ```
 
+### Start the server
 
-## 🧪 Testing
-Run tests with:
 ```sh
-python -m pip install -r requirements-dev.txt
-python -m pytest
+python app.py
 ```
 
-## ⏱️ Cron Job Management
-### Automate scraper execution:
+### 🧪 Run Tests
+
+Install dev dependencies and run tests:
+
+```sh
+pip install -r requirements-dev.txt
+pytest
+```
+
+### ⏰ Schedule Scraper with Cron
+
+Automate scraper execution via cron jobs:
+
 ```sh
 chmod +x scripts/*
-./scripts/install_cron.sh    # Add cron job
-./scripts/uninstall_cron.sh  # Remove cron job
+./scripts/install_cron.sh    # Add scheduled run
+./scripts/uninstall_cron.sh  # Remove scheduled run
 ```
 
-Double check with:
-```
+Check your cron jobs:
+
+```sh
 crontab -l
 ```
 
-## 📁 Output
+### 📂 Outputs
 
-Scraped data and charts are saved to:
+Scraped data and generated charts will be saved to:
+
 ```
--	data/techinasia_jobs_*.csv
-- data/charts/*.png
+data/techinasia_jobs_*.csv
+data/charts/*.png
 ```
+
+> If you encounter issues, ensure all dependencies are installed and your Python version is correct.
+
+
+
+---
+
+
+
+## 📁 Key Files & Structure
+
+```text
+.
+├── README.md                 # Setup & usage instructions
+├── report.md                 # Project writeup/report
+├── requirements.txt          # Core dependencies
+├── requirements-dev.txt      # Dev/test dependencies
+├── app.py                    # API/web server entrypoint
+├── logs/                     # Runtime logs
+├── _additional/              # Project docs, Dockerfiles, legacy scripts
+├── _learnings/               # Personal notes, not needed for review
+|
+├── data/
+│   ├── techinasia_jobs_*.csv # Output: scraped jobs data
+│   ├── charts/               # Output: analysis plots
+│   │   └── *.png
+│   └── quality_report.csv    # Data quality info
+|
+├── scraper/
+│   ├── selenium_scraper.py   # Main Selenium scraping logic (**entry point**)
+│   ├── __init__.py
+│   ├── settings.py           # Scrapy/Selenium settings (if used)
+│   ├── items.py, pipelines.py, middlewares.py  # (Scrapy modules, if used)
+│   └── spiders/
+│       └── sg_jobs_spider.py # Spider logic (initial idea, for reference)
+|
+├── data_processing.py        # Cleans & analyses scraped data
+├── utils/
+│   ├── functions.py          # Shared helper functions
+│   ├── reporting.py          # Reporting utilities
+│   ├── constants.py          # Constants
+|   ├── enums.py              # Enums
+│   └── test_reporting.py     # Test for reporting utils
+|
+├── scripts/
+│   ├── install_cron.sh       # Add cron job
+│   └── uninstall_cron.sh     # Remove cron job
+|
+├── test_data_processing.py   # Tests for data processing
+|
+├── templates/
+    └── index.html            # (If web frontend is used)
+
+```
+
+---
+
+***Explanation for reviewers:***
+
+* **scraper/selenium\_scraper.py** – *Main scraping entry point*.
+* **data\_processing.py** – *Cleans and analyses data*.
+* **data/** – *All output data and generated plots are saved here*.
+* **scripts/** – *Cron job management*.
+* **utils/** – *Reusable functions and reporting helpers*.
+* **README.md / report.md** – *Instructions and technical writeup*.
+
+---
+
+**Unsure/Extra (review if needed):**
+
+* `app.py` (if not running as a web server, can ignore)
+* `spiders/`, `items.py`, `pipelines.py`, `middlewares.py` (if not using Scrapy)
+* `_additional/`, `_learnings/` (project notes/docs, not needed for build/run)
+* `logs/` (helpful for debug, not core logic)
+
+
+
+---
+
+
+
+## References
+- https://www.techinasia.com/jobs/search?country_name[]=Singapore&country_name[]=Remote&job_type[]=Full-time&job_type[]=Freelance&currency=SGD
+- https://www.techinasia.com/robots.txt
+- https://www.techinasia.com/sitemap.xml
