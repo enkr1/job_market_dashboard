@@ -183,7 +183,7 @@ echo "    python app.py"
 |
 ├── test_data_processing.py   # Tests for data processing
 |
-├── templates/
+└── templates/
     └── index.html            # (If web frontend is used)
 
 ```
