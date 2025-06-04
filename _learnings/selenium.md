@@ -24,7 +24,7 @@ In this technical assessment, my original plan was to extract Software Engineer,
      ```
 2. **Copied Headers & Payload**:
    - Request Method: `POST`
-   - Headers like `X-Algolia-Application-Id: 219WX3MPV4`, `X-Algolia-API-Key: b52800…`, `Content-Type: application/json`, etc.
+   - Headers like `X-Algolia-Application-Id: 219WX3MPV4`, `X-Algolia-API-Key: b52800...`, `Content-Type: application/json`, etc.
    - Payload (URL-encoded `params` field with facets, filters, `page=0`, `hitsPerPage=20`, etc.).
 
 3. **Built a Python `fetch_jobs.py`**:
@@ -39,7 +39,7 @@ In this technical assessment, my original plan was to extract Software Engineer,
 - **Dynamic Payload Parameters**:
   - The `params` field in the Algolia payload is a URL-encoded string containing JSON-like parameters:
     ```text
-    query=&hitsPerPage=20&maxValuesPerFacet=1000&page=0&facets=[…]&tagFilters=[[…],[…],[…]]
+    query=&hitsPerPage=20&maxValuesPerFacet=1000&page=0&facets=[...]&tagFilters=[[...],[...],[...]]
     ```
   - I hard-coded the `tagFilters` for “Full-time”, “Software Engineer”, “Singapore”. However, I missed subtle updates in the site’s JavaScript: sometimes the site changed the way it combined filters (e.g., changed facet names or their encoding). As a result, “nbHits = 0” became common.
 
@@ -106,8 +106,8 @@ In this technical assessment, my original plan was to extract Software Engineer,
    - Migrated from bare `print` statements to Python’s `logging` module with `DEBUG`, `INFO`, `WARNING`, `ERROR` levels.
    - Example logs:
      ```
-     [INFO ] Navigating to URL…
-     [DEBUG] Waiting up to 15s for initial job cards…
+     [INFO ] Navigating to URL...
+     [DEBUG] Waiting up to 15s for initial job cards...
      [INFO ] Initial load: found 20 job cards
      [DEBUG] Extracted job: “Senior Frontend Engineer” @ Cyberbot Pte Ltd
      [DEBUG] Scroll round #1: old_height=1234, new_height=2345
@@ -278,7 +278,7 @@ def scrape_all_jobs() -> pd.DataFrame:
     all_jobs, seen_links = [], set()
     try:
         driver.get(TECH_IN_ASIA_URL)
-        # Wait + initial scrape omitted for brevity…
+        # Wait + initial scrape omitted for brevity...
         # Scroll loop:
         last_height = driver.execute_script("return document.body.scrollHeight")
         while True:
@@ -327,5 +327,3 @@ if __name__ == "__main__":
 By documenting each misstep and explaining how Selenium solved the core issues, this reflection not only illustrates my own growth as a scrapers engineer but also showcases the rationale behind tool choice, best practices in exception handling, directory management, and developer‐friendly logging. When I package this code and reflection into the final PDF submission, readers will clearly see why I arrived at the Selenium solution, how I debugged it, and how I structured it for production readiness.
 
 ⸻
-
-

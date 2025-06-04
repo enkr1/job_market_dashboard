@@ -186,7 +186,13 @@ def scrape_all_jobs() -> pd.DataFrame:
 
         while no_growth_rounds < MAX_NO_GROWTH_ROUNDS:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            logger.debug("Scrolled to bottom; waiting for potential new content…")
+            logger.debug("Scrolled to bottom; waiting for potential new content...")
+
+            # --- Politeness / throttling ------------------------------------------------
+            # We deliberately pause 2s between scroll-fetch cycles (SCROLL_PAUSE_TIME)
+            # and cap the browser’s max scroll rate so we don’t hammer techinasia.com
+            # with rapid-fire requests.  This keeps our footprint light and avoids
+            # triggering any rate-limit or CAPTCHA.
             time.sleep(SCROLL_PAUSE_TIME)
 
             # Recompute height and card count

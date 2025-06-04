@@ -43,7 +43,7 @@ def home():
     )
 
 
-@app.route("/api/jobs")
+@app.route("/api/v1/jobs")
 def api_jobs():
     """
     Return the sanitised dataset as clean JSON.

@@ -36,17 +36,15 @@ def extract_salaries(compensation):
 
 def cleanup_and_analyse(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Clean raw Tech-in-Asia job listings and write artefacts.
+    Standardise column names, parse salaries / dates, and de-duplicate.
 
-    Parameters
-    ----------
-    df : pandas.DataFrame
-        Raw dataset as produced by `selenium_scraper.py`.
+    ⚠️  Data-retention policy
+    -------------------------
+    • **Keep** rows whose salary is hidden (salary_min / salary_max == NaN)
+        – They’re still useful for non-compensation analyses (e.g. posting volume, title search, company counts).
+    • **Filter out** those rows *only* when we compute salary-specific statistics or build the salary histogram on Dashboard.
+    This gives us a loss-less master dataset while ensuring pay charts are not skewed by nulls.
 
-    Returns
-    -------
-    pandas.DataFrame
-        Sanitised subset (columns listed in `sanitised_cols`).
     """
 
     logger.info("Starting data cleanup and analysis.")
