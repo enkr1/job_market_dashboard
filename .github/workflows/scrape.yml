@@ -2,14 +2,14 @@ name: Every 5 minutes scrape
 
 on:
   schedule:
-    - cron:  '*/5 * * * *'        # UTC; same as local schedule  [oai_citation:3‡jasonet.co](https://jasonet.co/posts/scheduled-actions/?utm_source=chatgpt.com)
+    - cron:  '*/5 * * * *'        # UTC; same as local schedule
   workflow_dispatch:            # manual “Run workflow” button in UI
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4          # fetch repo  [oai_citation:4‡github.com](https://github.com/actions/setup-python?utm_source=chatgpt.com)
+      - uses: actions/checkout@v4          # fetch repo
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -22,7 +22,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run full pipeline
-        run: python run_pipeline.py
+        run: python -m scraper.selenium_scraper
 
       - name: Upload artefacts (optional)
         uses: actions/upload-artifact@v4
@@ -42,4 +42,4 @@ jobs:
           git commit -m "GH Action: update data (`date -u '+%Y-%m-%d %H:%M'`)" || echo "No changes"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # auto-scoped token  [oai_citation:5‡docs.github.com](https://docs.github.com/actions/security-guides/automatic-token-authentication?utm_source=chatgpt.com)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # auto-scoped token
