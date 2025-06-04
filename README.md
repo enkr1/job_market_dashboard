@@ -39,6 +39,7 @@ Your README setup is already clean and direct, but it can be made even more conc
 ## 📦 Setup
 
 > **Platform:** macOS (Bash).
+> 
 > **Prerequisite:** Python 3.x installed.
 
 ### 🚀 Quick Start (Recommended)
