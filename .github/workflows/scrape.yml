@@ -2,7 +2,7 @@ name: Every 5 minutes scrape
 
 on:
   schedule:
-    - cron:  '*/5 * * * *'        # UTC; same as local schedule
+    - cron:  '0 8 * * *'        # UTC; same as local schedule
   workflow_dispatch:            # manual “Run workflow” button in UI
 
 jobs:
