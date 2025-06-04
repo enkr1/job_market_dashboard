@@ -36,41 +36,56 @@ Your README setup is already clean and direct, but it can be made even more conc
 
 ---
 
-## 📦 Set up
+## 📦 Setup
 
 > **Platform:** macOS (Bash).
 > **Prerequisite:** Python 3.x installed.
 
-### Install dependencies
+### 🚀 Quick Start (Recommended)
+
+For one-step setup, run:
+
+```sh
+chmod +x setup.sh
+./setup.sh
+```
+
+---
+
+### Manual Setup
+
+**Set up Python virtual environment (recommended):**
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+**Install dependencies:**
 
 ```sh
 pip install -r requirements.txt
 ```
 
-### Run the scraper
+**Run the scraper:**
 
 ```sh
 python -m scraper.selenium_scraper
 ```
 
-### Start the server
+**Start the server (if using):**
 
 ```sh
 python app.py
 ```
 
-### 🧪 Run Tests
-
-Install dev dependencies and run tests:
+**Run tests:**
 
 ```sh
 pip install -r requirements-dev.txt
 pytest
 ```
 
-### ⏰ Schedule Scraper with Cron
-
-Automate scraper execution via cron jobs:
+**Automate scraper via cron:**
 
 ```sh
 chmod +x scripts/*
@@ -78,22 +93,47 @@ chmod +x scripts/*
 ./scripts/uninstall_cron.sh  # Remove scheduled run
 ```
 
-Check your cron jobs:
+Check cron jobs:
 
 ```sh
 crontab -l
 ```
 
-### 📂 Outputs
-
-Scraped data and generated charts will be saved to:
+**Outputs:**
+Scraped data and charts are saved to:
 
 ```
 data/techinasia_jobs_*.csv
 data/charts/*.png
 ```
 
-> If you encounter issues, ensure all dependencies are installed and your Python version is correct.
+---
+
+### 🛠️ Example: Minimal `setup.sh`
+
+```bash
+#!/bin/bash
+set -e
+
+echo "Installing dependencies..."
+pip install -r requirements.txt
+
+echo "Installing dev dependencies (optional)..."
+pip install -r requirements-dev.txt || true
+
+echo "Running tests..."
+pytest || echo "Some tests failed"
+
+echo "Setup complete. To run the scraper:"
+echo "    python -m scraper.selenium_scraper"
+echo "To start the server:"
+echo "    python app.py"
+```
+
+* You may add:
+
+  * Cron job install, or
+  * Prompt to run the scraper/server.
 
 
 
@@ -105,6 +145,7 @@ data/charts/*.png
 
 ```text
 .
+├── setup.sh                  # All-in-one init & setup script
 ├── README.md                 # Setup & usage instructions
 ├── report.md                 # Project writeup/report
 ├── requirements.txt          # Core dependencies
