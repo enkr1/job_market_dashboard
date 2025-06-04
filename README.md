@@ -29,7 +29,7 @@ CSV
 ## Deliverables
 - [X] Code/Scripts used for scraping and data extraction, with clear instructions on how to run them
 - [X] Extracted data file in JSON or CSV format
-- [ ] Written report (1-2 pages) including your overall approach and design
+- [X] Written report (1-2 pages) including your overall approach and design - [report](/report.md)
 
 ---
 
@@ -58,6 +58,11 @@ python -m pytest
 chmod +x scripts/*
 ./scripts/install_cron.sh    # Add cron job
 ./scripts/uninstall_cron.sh  # Remove cron job
+```
+
+Double check with:
+```
+crontab -l
 ```
 
 ## 📁 Output

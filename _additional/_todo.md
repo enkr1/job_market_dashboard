@@ -53,8 +53,7 @@
 - [X] Build `/api/v1/jobs` endpoint (NaN-free JSON).
 - [X] Serve interactive Chart.js graphs (salary, companies, jobs/day).
 - [X] Display “Last updated” timestamp in footer.
-- [ ] Add auto-refresh badge or spinner while charts reload.
-- [ ] Note in README how to change port / host for deployment.
+- [X] Add auto-refresh badge or spinner while charts reload.
 
 ---
 
@@ -62,21 +61,21 @@
 
 - [X] Unit tests for util helpers (`utils`, salary parser, date parser).
 - [X] Smoke test for scraper functions using `pytest` & monkeypatch.
-- [ ] Add one integration test that loads a tiny CSV and hits `/api/v1/jobs`.
+- [X] Add one integration test that loads a tiny CSV and hits `/api/v1/jobs`.
 - [ ] CI workflow stub (GitHub Actions) that runs `pytest` on push.
 
 ---
 
 ## 7. Reporting
 
-- [ ] Draft a concise, well-structured **report (Markdown or PDF)** covering:
+- [X] Draft a concise, well-structured **report (Markdown or PDF)** covering:
   - Project goal & scraping challenges.
   - Tech stack used and reasons for using Selenium.
   - Code workflow and logic highlights.
   - Data analysis: insights, statistics, and key plots.
   - Problems encountered and solutions taken.
   - Final results and location of output files.
-- [ ] Update **README.md** to clearly document:
+- [X] Update **README.md** to clearly document:
   - Project purpose and features.
   - How to set up and run everything locally.
   - Where to find the main outputs (CSV, cleaned data, plots, report).
@@ -86,7 +85,7 @@
 
 ## 8. Validation & Submission
 
-- [ ] Test end-to-end: scraping → cleaning → analysis → dashboard.
-- [ ] Ensure outputs meet requirements (≥100 jobs, data quality, clear outputs).
-- [ ] Proofread all deliverables for clarity, grammar, and professionalism.
+- [X] Test end-to-end: scraping → cleaning → analysis → dashboard.
+- [X] Ensure outputs meet requirements (≥100 jobs, data quality, clear outputs).
+- [X] Proofread all deliverables for clarity, grammar, and professionalism.
 - [ ] Prepare submission package (repo link or ZIP) with all required files included.
