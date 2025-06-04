@@ -30,3 +30,21 @@ CSV
 - [ ] Code/Scripts used for scraping and data extraction, with clear instructions on how to run them
 - [ ] Extracted data file in JSON or CSV format
 - [ ] Written report (1-2 pages) including your overall approach and design
+
+
+
+## Set up
+```
+pip install -r requirements.txt
+```
+
+scraper
+```
+python scraper/selenium_scraper.py
+```
+
+test
+```
+python -m pip install -r requirements-dev.txt
+python -m pytest
+```

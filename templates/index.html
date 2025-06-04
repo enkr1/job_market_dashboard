@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Market Dashboard</title>
+</head>
+
+<body>
+  <style>
+    body {
+      padding: 3rem;
+    }
+
+    section {
+      margin: 1rem 0;
+      border-bottom: 1px solid #999;
+      padding: 4rem;
+    }
+  </style>
+
+  <h1><b>Jing Hui PANG</b> | Job Market Scraper | Dashboard</h1>
+
+  <section>
+    <h1>Jobs Per Day (last 30 days)</h1>
+    <canvas id="jobsPerDayChart"></canvas>
+  </section>
+
+  <section>
+    <h1>Salary Distribution (SGD)</h1>
+    <canvas id="salaryHistChart"></canvas>
+  </section>
+
+  <section>
+    <h1>Top 10 Companies by Postings</h1>
+    <canvas id="topCompaniesChart"></canvas>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    /**
+     * Utilities
+     * ---------
+     * – getJSON: safe fetch with graceful fallback
+     * – groupByDay: count items per day for a window
+     * – buildHistogram: bin numeric samples automatically via Sturges rule
+     */
+    async function getJSON(url, fallback = []) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(res.statusText);
+        return await res.json();
+      } catch (e) {
+        console.error("⚠️ Failed to fetch", url, e);
+        return fallback;
+      }
+    }
+
+    const toISO = d => d.toISOString().slice(0, 10);
+
+    function groupByDay(rows, days = 30) {
+      const today = new Date();
+      const start = new Date(today - (days - 1) * 864e5);
+
+      const counts = Array.from({ length: days }, (_, i) => ({
+        label: toISO(new Date(start.getTime() + i * 864e5)),
+        value: 0
+      }));
+      const idx = Object.fromEntries(counts.map((c, i) => [c.label, i]));
+
+      rows.forEach(r => {
+        /* 1️⃣  parse the date string */
+        const dObj = new Date(r.published_date_parsed);
+
+        /* 2️⃣  check the _Date object_ */
+        if (isNaN(dObj)) return;              // skip truly bad values
+
+        /* 3️⃣  convert to canonical “YYYY-MM-DD” once it’s valid */
+        const iso = toISO(dObj);
+
+        if (iso in idx) counts[idx[iso]].value += 1;
+      });
+
+      return counts;
+    }
+
+    function buildHistogram(values, maxBins = 30) {
+      if (!values.length) return { labels: [], buckets: [] };
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      // Sturges rule: k = ceil(log2 n + 1)
+      const k = Math.min(Math.ceil(Math.log2(values.length) + 1), maxBins);
+      const binSize = Math.max(1, Math.ceil((max - min) / k));
+      const bins = Array.from({ length: k }).fill(0);
+      values.forEach(v => {
+        const idx = Math.min(Math.floor((v - min) / binSize), k - 1);
+        bins[idx] += 1;
+      });
+      const labels = bins.map((_, i) => {
+        const low = min + i * binSize;
+        const high = low + binSize - 1;
+        return `$${(low / 1000).toFixed(1)}k–$${(high / 1000).toFixed(1)}k`;
+      });
+      return { labels, buckets: bins };
+    }
+
+    /**
+     * Chart builders (all idempotent so they can be refreshed)
+     */
+    function renderBarChart(ctx, labels, data, horizontal = false) {
+      if (ctx._chart) ctx._chart.destroy();
+      ctx._chart = new Chart(ctx, {
+        type: "bar",
+        data: { labels, datasets: [{ label: "Listings", data }] },
+        options: {
+          indexAxis: horizontal ? "y" : "x",
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { x: { ticks: { precision: 0 } } }
+        }
+      });
+    }
+
+    async function init() {
+      const rows = await getJSON("/api/jobs");
+
+      /* -------- jobs / day (last 30) -------- */
+      const daily = groupByDay(rows, 30);
+      console.log(`[DEBUG] daily`, daily)
+      renderBarChart(
+        document.getElementById("jobsPerDayChart"),
+        daily.map(d => d.label),
+        daily.map(d => d.value)
+      );
+
+      /* -------- salary histogram -------- */
+      const salaries = rows
+        .map(r => Number(r.salary_min))
+        .filter(v => !isNaN(v) && v > 0);
+      const hist = buildHistogram(salaries);
+      renderBarChart(
+        document.getElementById("salaryHistChart"),
+        hist.labels,
+        hist.buckets
+      );
+
+      /* -------- top companies (top‑10) -------- */
+      const counts = {};
+      rows.forEach(r => {
+        const key = (r.company_name || r.company || "").toLowerCase().trim();
+        if (key) counts[key] = (counts[key] || 0) + 1;
+      });
+      const top = Object.entries(counts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+      renderBarChart(
+        document.getElementById("topCompaniesChart"),
+        top.map(t => t[0]),
+        top.map(t => t[1]),
+        true
+      );
+
+      /* -------- last‑updated badge -------- */
+      const updated = rows.length
+        ? new Date(Math.max(...rows.map(r => new Date(r.scraped_at || Date.now()))))
+        : new Date();
+      document.getElementById("lastUpdated").textContent = updated.toLocaleString();
+    }
+
+    // initial load + auto‑refresh
+    init();
+    setInterval(init, 60_000);
+  </script>
+  <p style="font-size:0.9em;color:#666;">Last updated: <span id="lastUpdated">{{ last_updated }}</span></p>
+</body>
+
+</html>

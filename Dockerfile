@@ -1,6 +1,10 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
+# Add a healthcheck to ensure the container is running and responsive
+# This example checks if the Scrapy process is running
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD pgrep scrapy > /dev/null || exit 1
+
 # Set the working directory in the container
 WORKDIR /usr/src/app
 

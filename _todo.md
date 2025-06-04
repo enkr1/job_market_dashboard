@@ -35,12 +35,15 @@
 
 ## 4. Data Cleaning & Analysis
 
-- [ ] Create or update a script (`analysis/clean_and_analyse.py`) to:
-  - Load the raw job CSV.
-  - Parse salary ranges and posted dates.
+- [X] Create or update a script (`analysis/clean_and_analyse.py`) to:
+  - [X] Load the raw job CSV.
+  - [X] Parse salary ranges and posted dates.
   - Print missing-value counts and basic descriptive statistics.
   - Save a cleaned CSV for further analysis.
-  - Generate at least two simple plots (salary distribution, top companies).
+  - Generate at least two simple plots
+    - salary distribution
+    - top companies
+    - ...
 
 ---
 
