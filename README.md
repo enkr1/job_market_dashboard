@@ -107,34 +107,6 @@ data/techinasia_jobs_*.csv
 data/charts/*.png
 ```
 
----
-
-### 🛠️ Example: Minimal `setup.sh`
-
-```bash
-#!/bin/bash
-set -e
-
-echo "Installing dependencies..."
-pip install -r requirements.txt
-
-echo "Installing dev dependencies (optional)..."
-pip install -r requirements-dev.txt || true
-
-echo "Running tests..."
-pytest || echo "Some tests failed"
-
-echo "Setup complete. To run the scraper:"
-echo "    python -m scraper.selenium_scraper"
-echo "To start the server:"
-echo "    python app.py"
-```
-
-* You may add:
-
-  * Cron job install, or
-  * Prompt to run the scraper/server.
-
 
 
 ---
@@ -189,24 +161,6 @@ echo "    python app.py"
 ```
 
 ---
-
-***Explanation for reviewers:***
-
-* **scraper/selenium\_scraper.py** – *Main scraping entry point*.
-* **data\_processing.py** – *Cleans and analyses data*.
-* **data/** – *All output data and generated plots are saved here*.
-* **scripts/** – *Cron job management*.
-* **utils/** – *Reusable functions and reporting helpers*.
-* **README.md / report.md** – *Instructions and technical writeup*.
-
----
-
-**Unsure/Extra (review if needed):**
-
-* `app.py` (if not running as a web server, can ignore)
-* `spiders/`, `items.py`, `pipelines.py`, `middlewares.py` (if not using Scrapy)
-* `_additional/`, `_learnings/` (project notes/docs, not needed for build/run)
-* `logs/` (helpful for debug, not core logic)
 
 
 
