@@ -38,12 +38,12 @@
 - [X] Create or update a script (`analysis/clean_and_analyse.py`) to:
   - [X] Load the raw job CSV.
   - [X] Parse salary ranges and posted dates.
-  - Print missing-value counts and basic descriptive statistics.
-  - Save a cleaned CSV for further analysis.
-  - Generate at least two simple plots
-    - salary distribution
-    - top companies
-    - ...
+  - [X] Print missing-value counts and basic descriptive statistics.
+  - [X] Save a cleaned CSV for further analysis.
+  - [X] Generate at least two simple plots
+    - salary distribution (salary_histogram.png)
+    - top companies (bar_top_companies.png)
+    - jobs-per-day (jobs_per_day.png)
 
 ---
 

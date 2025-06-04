@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from flask import Flask, abort, jsonify, render_template
 
-from utils.constants import OUTPUT_PATH_SANITISED
+from utils.constants import OUTPUT_PATH_REPORT, OUTPUT_PATH_SANITISED
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
@@ -31,7 +31,16 @@ def home():
         if Path(OUTPUT_PATH_SANITISED).exists()
         else "N/A"
     )
-    return render_template("index.html", last_updated=last_updated)
+    # Load quality report
+    if Path(OUTPUT_PATH_REPORT).exists():
+        quality_df = pd.read_csv(OUTPUT_PATH_REPORT)
+        quality_stats = quality_df.to_dict(orient="records")[0]
+    else:
+        quality_stats = {}
+
+    return render_template(
+        "index.html", last_updated=last_updated, quality_stats=quality_stats
+    )
 
 
 @app.route("/api/jobs")

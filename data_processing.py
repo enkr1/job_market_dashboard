@@ -14,6 +14,7 @@ from utils.constants import (
     OUTPUT_PATH_SANITISED,
 )
 from utils.functions import get_csv_path, get_logger
+from utils.reporting import log_quality_report
 
 logger = get_logger(__name__)
 
@@ -51,13 +52,13 @@ def cleanup_and_analyse(df: pd.DataFrame) -> pd.DataFrame:
     logger.info("Starting data cleanup and analysis.")
 
     # 1. Extract salary_min and salary_max from 'compensation'
-    if "salary_min" not in df.columns or "salary_max" not in df.columns:
+    if "compensation" in df.columns:
         df[["salary_min", "salary_max"]] = df["compensation"].apply(
             lambda x: pd.Series(extract_salaries(x))
         )
 
     # 2. Create company_name for consistency
-    if "company_name" not in df.columns and "company" in df.columns:
+    if "company" in df.columns:
         df["company_name"] = df["company"]
 
     # 3. Drop duplicates by 'id' (the job's unique identifier)
@@ -65,7 +66,7 @@ def cleanup_and_analyse(df: pd.DataFrame) -> pd.DataFrame:
         df = df.drop_duplicates(subset=["id"])
 
     # 3b. Parse the published_date into an actual datetime for downstream analysis
-    if "published_date_parsed" not in df.columns:
+    if "published_date" in df.columns:
         df["published_date_parsed"] = pd.to_datetime(
             df["published_date"], errors="coerce"
         )
@@ -97,6 +98,9 @@ def cleanup_and_analyse(df: pd.DataFrame) -> pd.DataFrame:
     ]
     df[sanitised_cols].to_csv(OUTPUT_PATH_SANITISED, index=False)
     logger.info(f"Saved sanitised dataset → {OUTPUT_PATH_SANITISED}")
+
+    # NEW: quick quality snapshot
+    log_quality_report(df[sanitised_cols])
 
     # -----------------------------------------------------------------
     # 1) Salary histogram – only rows with salary_min

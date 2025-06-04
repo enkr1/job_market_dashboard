@@ -23,17 +23,30 @@
   <h1><b>Jing Hui PANG</b> | Job Market Scraper | Dashboard</h1>
 
   <section>
-    <h1>Jobs Per Day (last 30 days)</h1>
+    <h2>Data Quality Report</h2>
+    {% if quality_stats %}
+    <ul>
+      {% for key, value in quality_stats.items() %}
+      <li><strong>{{ key.replace('_', ' ').title() }}:</strong> {{ value }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No quality report available.</p>
+    {% endif %}
+
+  </section>
+  <section>
+    <h2>Jobs Per Day (last 30 days)</h2>
     <canvas id="jobsPerDayChart"></canvas>
   </section>
 
   <section>
-    <h1>Salary Distribution (SGD)</h1>
+    <h2>Salary Distribution (SGD)</h2>
     <canvas id="salaryHistChart"></canvas>
   </section>
 
   <section>
-    <h1>Top 10 Companies by Postings</h1>
+    <h2>Top 10 Companies by Postings</h2>
     <canvas id="topCompaniesChart"></canvas>
   </section>
 
