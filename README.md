@@ -31,6 +31,11 @@ CSV
 - [X] Extracted data file in JSON or CSV format
 - [X] Written report (1-2 pages) including your overall approach and design - [report](/report.md)
 
+---
+
+## Demo
+
+![20250605005033_rec_](https://github.com/user-attachments/assets/75bfab25-2c08-4c31-9017-dc3de081a478)
 
 
 ---
