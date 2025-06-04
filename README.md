@@ -27,24 +27,43 @@ CSV
     1. Provide a brief analysis of the data you extracted. This could include insights like data distributions, notable patterns, or data quality issues.
 
 ## Deliverables
-- [ ] Code/Scripts used for scraping and data extraction, with clear instructions on how to run them
-- [ ] Extracted data file in JSON or CSV format
+- [X] Code/Scripts used for scraping and data extraction, with clear instructions on how to run them
+- [X] Extracted data file in JSON or CSV format
 - [ ] Written report (1-2 pages) including your overall approach and design
 
+---
 
-
-## Set up
-```
+## 📦 Setup
+### 1. Install dependencies
+```sh
 pip install -r requirements.txt
 ```
 
-scraper
-```
-python scraper/selenium_scraper.py
+### 2. Run the scraper directly
+```sh
+python -m scraper.selenium_scraper # Run the scraper directly
 ```
 
-test
-```
+
+## 🧪 Testing
+Run tests with:
+```sh
 python -m pip install -r requirements-dev.txt
 python -m pytest
+```
+
+## ⏱️ Cron Job Management
+### Automate scraper execution:
+```sh
+chmod +x scripts/*
+./scripts/install_cron.sh    # Add cron job
+./scripts/uninstall_cron.sh  # Remove cron job
+```
+
+## 📁 Output
+
+Scraped data and charts are saved to:
+```
+-	data/techinasia_jobs_*.csv
+- data/charts/*.png
 ```
